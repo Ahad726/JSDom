@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row py-5" >
+            <div class="col-10 mx-auto">
+                <h2> Dynamically insert new row with keydown event </h2>
+                <h4> press ctrl + z </h4>
+            </div>
+        </div>
+
+        <table id="tb" class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Serial No.</th>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="p-0">1</td>
+                    <td class="p-0"><input type="text" class="col"></td>
+                    <td class="p-0"><input type="text" class="col"></td>
+                    <td class="p-0"><input type="text" class="col"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 'z') {
+
+                // Get the table element
+                var table = document.getElementById('tb');
+
+                // Get the last row of the table
+                var lastRow = table.rows[table.rows.length - 1];
+
+                // Create a new row with a dynamic serial number
+                var newRow = table.insertRow();         // insert new row
+                var newCell = newRow.insertCell();   // insert first column into the new row
+                newCell.classList.add('p-0');
+                newCell.innerHTML = parseInt(lastRow.cells[0].innerHTML) + 1; // Set the serial number
+
+                for (var i = 0; i < lastRow.cells.length - 1; i++) { // loop will traverse for all column of the row
+                    // except the 0th or first column
+                    // input element creation part
+                    var newInput = document.createElement('input'); // Create new input element
+                    newInput.setAttribute('type', 'text'); // Set input type to text
+                    newInput.classList.add('col'); // Add Bootstrap class to input element
+
+                    // new cell creation part
+                    var newCell = newRow.insertCell();
+                    newCell.classList.add('p-0'); // Add Bootstrap class to cell element
+                    newCell.appendChild(newInput); // Add new input cell to row and append input element to cell
+                }
+            }
+        });
+    </script>
+</body>
+</html>
